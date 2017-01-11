@@ -20,7 +20,7 @@ var Notice = require('../models/notice')
  *         "url_img": "https://i.imgur.com/WiaAYKn.gif",
  *         "_id": "58730624f210341390a79fd4",
  *         "created": "2017-01-19T02:31:13.000Z"
- *     },
+ *     },{
  *         "title": "Campeonato de Bochas",
  *         "content": "El trío de bochas del Club Atlético Huracán de Chillar está participando del ...",
  *         "category": "DEPORTES",
