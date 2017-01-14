@@ -31,7 +31,7 @@ var Notice = require('../models/notice')
  *     }]
  *}
  */
-exports.index = function (req, res) {
+exports.all = function (req, res) {
 	Notice.find({})
 	.exec(function (err, notices) {
 		if (err) return res.status(500).json({
@@ -73,7 +73,7 @@ exports.index = function (req, res) {
  *     }
  * }
  */
-exports.post = function (req, res) {
+exports.create = function (req, res) {
 	var notice = new Notice(req.body.notice)
 	
 	notice
