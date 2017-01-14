@@ -1,6 +1,6 @@
 {
   "name": "api-cahc",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "API - Club Atletico Huracan Chillar",
   "scripts": {
     "start": "node ./bin/www"
@@ -16,11 +16,16 @@
   },
   "license": "MIT",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.2",
     "cors": "^2.8.1",
     "dotenv": "^4.0.0",
     "express": "^4.14.0",
+    "jwt-simple": "^0.5.1",
+    "moment": "^2.17.1",
     "mongoose": "^4.7.6",
+    "mongoose-deep-populate": "^3.0.0",
+    "mongoose-unique-validator": "^1.0.3",
     "morgan": "^1.7.0",
     "serve-favicon": "^2.3.2"
   }

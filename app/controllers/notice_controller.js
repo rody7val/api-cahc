@@ -20,7 +20,7 @@ var Notice = require('../models/notice')
  *         "url_img": "https://i.imgur.com/WiaAYKn.gif",
  *         "_id": "58730624f210341390a79fd4",
  *         "created": "2017-01-19T02:31:13.000Z"
- *     },
+ *     },{
  *         "title": "Campeonato de Bochas",
  *         "content": "El trío de bochas del Club Atlético Huracán de Chillar está participando del ...",
  *         "category": "DEPORTES",
@@ -31,7 +31,7 @@ var Notice = require('../models/notice')
  *     }]
  *}
  */
-exports.index = function (req, res) {
+exports.all = function (req, res) {
 	Notice.find({})
 	.exec(function (err, notices) {
 		if (err) return res.status(500).json({
@@ -73,7 +73,7 @@ exports.index = function (req, res) {
  *     }
  * }
  */
-exports.post = function (req, res) {
+exports.create = function (req, res) {
 	var notice = new Notice(req.body.notice)
 	
 	notice

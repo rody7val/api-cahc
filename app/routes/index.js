@@ -1,35 +1,23 @@
 // Controllers
-var noticeController = require('../controllers/notice_controller')
-var config = require('../../config.js')
+var Notice = require('../controllers/notice_controller')
+var Auth = require('../controllers/auth_controller')
+var General = require('../controllers/general_controller')
+var Session = require('../controllers/session_controller')
 
 module.exports = function (express) {
     // Motor de rutas API
     var api = express.Router()
 
     // Documentación
-    var options = { root: config.raiz + '/app/' }
-    api.get('/', function (req, res){
-        res.sendFile('index.html', options, function (err) {
-            if (err) return res.status(500).json({
-                status: 500,
-                err: "Falta index.html"
-            })
-            console.log('Fichero index.html enviado.')
-            res.status(200).end()
-        })
-    })
-
+    api.get('/', General.doc)
+    // Auth
+    api.post('/auth/signup', Auth.emailSignup)
+    api.post('/auth/login', Auth.emailLogin)
     // Notices
-    api.get('/notices', noticeController.index)
-    api.post('/notices', noticeController.post)
-
+    api.get('/notices', Notice.all)
+    api.post('/notices', Session.ensureAuthenticated, Notice.create)
     // Restricción de rutas
-    api.get('*', function (req, res) {
-    	res.status(406).json({
-            status: 406,
-            err: 'No Aceptable'
-        })
-    })
+    api.get('*', General.restrict)
 
     // Retornar rutas API
     return api
