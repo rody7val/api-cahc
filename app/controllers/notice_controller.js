@@ -2,7 +2,6 @@ var Notice = require('../models/notice')
 
 /**
  * @api {get} /notices Obtener Noticias
- * @apiName getNotice
  * @apiGroup Notices
  * @apiVersion 0.1.0
  *
@@ -46,7 +45,6 @@ exports.all = function (req, res) {
 }
 /**
  * @api {post} /notices Crear Noticia
- * @apiName postNotice
  * @apiGroup Notices
  * @apiVersion 0.1.0
  *
