@@ -3,7 +3,6 @@ define({ "api": [
     "type": "get",
     "url": "/notices",
     "title": "Obtener Noticias",
-    "name": "getNotice",
     "group": "Notices",
     "version": "0.1.0",
     "success": {
@@ -34,13 +33,13 @@ define({ "api": [
       ]
     },
     "filename": "app/controllers/notice_controller.js",
-    "groupTitle": "Notices"
+    "groupTitle": "Notices",
+    "name": "GetNotices"
   },
   {
     "type": "post",
     "url": "/notices",
     "title": "Crear Noticia",
-    "name": "postNotice",
     "group": "Notices",
     "version": "0.1.0",
     "parameter": {
@@ -112,6 +111,175 @@ define({ "api": [
       ]
     },
     "filename": "app/controllers/notice_controller.js",
-    "groupTitle": "Notices"
+    "groupTitle": "Notices",
+    "name": "PostNotices"
+  },
+  {
+    "type": "post",
+    "url": "/auth/login",
+    "title": "Iniciar Sesión",
+    "group": "Users",
+    "version": "0.1.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "email",
+            "description": "<p>Email del usuario registrado.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "password",
+            "description": "<p>Contraseña del usuario registrado.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Código de estado HTTP.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>Firma cifrada que permite identificar un usuario.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Respuesta de ejemplo de exito al iniciar sesión.",
+          "content": "{\n    \"status\": 200,\n    \"token\": \"eyJ0eXAiOiJKV1GUzI1NXAiOiJXAiOiJiJ9.eyJzdWIXAiOiJiOiGMTUyNzg4ZXAiOiJjBhMDQ...\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "Number",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Código de estado HTTP.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "err",
+            "description": "<p>Información del error.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Respuesta de ejemplo de error al iniciar sesión.",
+          "content": "{\n    \"status\": 500,\n    \"err\": \"Email incorrecto\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "app/controllers/auth_controller.js",
+    "groupTitle": "Users",
+    "name": "PostAuthLogin"
+  },
+  {
+    "type": "post",
+    "url": "/auth/signup",
+    "title": "Crear Usuario",
+    "group": "Users",
+    "version": "0.1.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "email",
+            "description": "<p>Email del usuario a registrar.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "password",
+            "description": "<p>Contraseña elegida por el usuario.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Código de estado HTTP.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>Firma cifrada que permite identificar un usuario.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Respuesta de ejemplo de exito al crear un usuario.",
+          "content": "{\n    \"status\": 200,\n    \"token\": \"eyJ0eXAiOiJKV1GUzI1NXAiOiJXAiOiJiJ9.eyJzdWIXAiOiJiOiGMTUyNzg4ZXAiOiJjBhMDQ...\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "Number",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Código de estado HTTP.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "err",
+            "description": "<p>Información del error.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Respuesta de ejemplo de error al crear un usuario.",
+          "content": "{\n    \"status\": 500,\n    \"err\": \"El 'Email' es incorrecto.\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "app/controllers/auth_controller.js",
+    "groupTitle": "Users",
+    "name": "PostAuthSignup"
   }
 ] });
