@@ -1,6 +1,83 @@
 define({ "api": [
   {
     "type": "get",
+    "url": "/notice/:noticeId",
+    "title": "Obtener una Noticia",
+    "group": "Notices",
+    "version": "0.1.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "noticeId",
+            "description": "<p>Identificador de la noticia.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Código de estado HTTP.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "notices",
+            "description": "<p>Objeto instancia de la noticia.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Respuesta de ejemplo:",
+          "content": "{\n    \"status\": 200,\n    \"notice\": {\n        \"title\": \"Incentivando el tenis\",\n        \"content\": \"Próximamente la nueva cancha de tenis del club tendrá profesor. En breves ...\",\n        \"category\": \"DEPORTES\",\n        \"status\": false,\n        \"url_img\": \"https://i.imgur.com/WiaAYKn.gif\",\n        \"_id\": \"58730624f210341390a79fd4\",\n        \"created\": \"2017-01-19T02:31:13.000Z\"\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "Number",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Código de estado HTTP.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "err",
+            "description": "<p>Información del error.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Respuesta de ejemplo de error al obtener una noticia.",
+          "content": "{\n    \"status\": 500,\n    \"err\": \"No existe la noticia con _id = 58730624f210341391a79fd4\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "app/controllers/notice_controller.js",
+    "groupTitle": "Notices",
+    "name": "GetNoticeNoticeid"
+  },
+  {
+    "type": "get",
     "url": "/notices",
     "title": "Obtener Noticias",
     "group": "Notices",

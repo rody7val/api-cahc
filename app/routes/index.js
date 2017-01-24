@@ -10,12 +10,19 @@ module.exports = function (express) {
 
     // Documentación
     api.get('/', General.doc)
+
+    // Autoload de comandos 
+    api.param('noticeId', Notice.load);
+
     // Auth
     api.post('/auth/signup', Auth.emailSignup)
     api.post('/auth/login', Auth.emailLogin)
+
     // Notices
+    api.get('/notices/:noticeId', Notice.one)
     api.get('/notices', Notice.all)
     api.post('/notices', Session.ensureAuthenticated, Notice.create)
+
     // Restricción de rutas
     api.get('*', General.restrict)
 
