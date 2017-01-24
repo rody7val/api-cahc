@@ -8,7 +8,8 @@ exports.load = function(req, res, next, noticeId) {
 	.findOne({_id: noticeId})
 	.exec(function (err, notice){
 		if (err) return res.status(500).json({
-			status: 500, 
+			status: 500,
+			error: err,
 			err: 'No existe la noticia con _id = '+ noticeId
 		})
 		req.notice = notice;
