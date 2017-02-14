@@ -16,7 +16,7 @@ var app = express(),
 db.connect(config.db, function (err) {
 	if (err) return console.error(err)
 	console.log('Conectado a la Base de Datos')
-})
+});
 
 // Configuraciones del servidor
 app.use(cors())

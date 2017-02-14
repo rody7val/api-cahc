@@ -2,8 +2,6 @@ var Notice = require('../models/notice')
 
 // Autoload - factoriza el código si la ruta incluye :noticeId
 exports.load = function(req, res, next, noticeId) {
-	console.log(noticeId)
-
 	Notice
 	.findOne({_id: noticeId})
 	.exec(function (err, notice){
@@ -15,7 +13,6 @@ exports.load = function(req, res, next, noticeId) {
 		req.notice = notice;
 		next();
 	})
-
 }
 
 /**
@@ -145,3 +142,13 @@ exports.create = function (req, res) {
 		})
 	})
 }
+
+exports.delete = function(req, res, next){
+	req.notice.remove(function (err) {
+		if (err) return res.status(500).json({
+			status: 500, 
+			err: err
+		})
+		next();
+	});
+};

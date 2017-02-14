@@ -6,19 +6,28 @@ var Schema = mongoose.Schema;
 
 // Modelo User
 var UserSchema = new Schema({
+    name: {
+        type: String,
+        validate: [function(name){
+            return name.length > 0;
+        }, 'Debe ingresar un Nombre']
+    },
     email: {
         type: String,
         index: {unique: true},
         validate: [function(email){
             return !(!email.match(/.+\@.+\..+/));
-        }, 'El "Email" es incorrecto.']
+        }, 'El Email es incorrecto.']
     },
     password: {
         type: String,
-        select: false,
         validate: [function(password){
             return password.length >= 6;
-        }, 'La "Contraseña" debe tener seis o mas caracteres.']
+        }, 'La Contraseña debe tener seis o mas caracteres.']
+    },
+    active: {
+        type: Boolean,
+        default: false
     },
     created: {
         type: Date,
@@ -39,6 +48,7 @@ UserSchema.pre('save', function (next) {
 
 // Comparar contraseñas
 UserSchema.methods.comparePassword = function (password, hash) {
+    // console.log(password, hash)
     return bcrypt.compareSync(password, hash);
 };
 

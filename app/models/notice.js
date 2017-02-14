@@ -28,6 +28,7 @@ var NoticeSchema = new Schema({
             return category.length > 0;
         }, 'Debes seleccionar una categoría.']
     },
+    autor: String,
     status: Boolean,
     url_img: String,
     created: {type: Date, default: Date.now}
