@@ -112,3 +112,111 @@ exports.emailLogin = function(req, res) {
         }
     })
 }
+
+/**
+ *
+ * Recuperar contraseña
+ *
+ */
+exports.forgot = function(req, res) {
+    var email = req.body.email || '';
+
+    User.findOne({email: email}, function (err, user){
+        // Error con la base de datos
+        if (err) return res.status(500).json({
+            status: 500, 
+            err: err
+        })
+        // Email incorrecto
+        else if (!user) return res.status(401).json({
+            status: 401, 
+            err: "Email incorrecto"
+        })
+        // Recuperar contraseña
+        var crypto = require('crypto');
+        crypto.randomBytes(20, function (err, buf) {
+            var token = buf.toString('hex');
+            user.resetPasswordToken = token;
+            user.resetPasswordExpires = Date.now() + 3600000; // 1 hora
+            user.save(function (err, user) {
+                // Enviar email forgot
+                var webMail = service.createWebMail("FORGOT", user.email, token);
+                webMail.sendMail(function (error, info) {
+                    if (error) return res.status(500).json({
+                        status: 500, 
+                        err: "Error de conección con el WebMail.",
+                        error: error
+                    });
+                    // Success!!
+                    res.status(200).json({
+                        status: 200,
+                        info: info,
+                        message: "Se ha enviado un e-mail a "+ user.email +" con instrucciones adicionales."
+                    });
+                });
+            });
+        });
+    });
+}
+
+/**
+ *
+ * Pase a formulario de Restablecer contraseña
+ *
+ */
+exports.reset_isNotExpired = function(req, res) {
+    User.findOne({ 
+        resetPasswordToken: req.params.token,
+        resetPasswordExpires: { $gt: Date.now() }
+    }, function (err, user) {
+        if (!user) return res.status(401).json({
+            status: 401,
+            success: false,
+            err: 'El token de restablecimiento de contraseña no es válido o ha caducado.'
+        });
+        res.status(200).json({
+            status: 200,
+            success: true
+        });
+    });
+}
+
+/**
+ *
+ * Restablecer contraseña
+ *
+ */
+exports.reset = function(req, res) {
+    User.findOne({ 
+        resetPasswordToken: req.params.token
+        // resetPasswordExpires: { $gt: Date.now() }
+    }, function (err, user) {
+        if (!user) return res.status(401).json({
+            status: 401,
+            err: 'El token de restablecimiento de contraseña no es válido o ha caducado. Intenta de nuevo.'
+        });
+        user.password = req.body.password;
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpires = undefined;
+
+        user.save(function (err, user) {
+            var webMail = service.createWebMail("RESET", user.email);
+
+            // Enviar email reset
+            webMail.sendMail(function (error, info) {
+                if (error) return res.status(500).json({
+                    status: 500, 
+                    err: "Error de conección con el WebMail",
+                    error: error
+                });
+                // Success!!
+                res.status(200).json({
+                    status: 200,
+                    info: info,
+                    user: user,
+                    message: '¡Éxito! Tu contraseña ha sido cambiada.'
+                });
+            });
+        });
+    });
+}

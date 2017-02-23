@@ -19,6 +19,9 @@ module.exports = function (express) {
     // Auth
     api.post('/auth/signup', Auth.emailSignup);
     api.post('/auth/login', Auth.emailLogin);
+    api.post('/auth/forgot', Auth.forgot);
+    api.get('/auth/reset/:token', Auth.reset_isNotExpired);
+    api.post('/auth/reset/:token', Auth.reset);
 
     // Users
     api.get('/users', User.all);

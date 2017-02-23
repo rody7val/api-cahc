@@ -25,6 +25,8 @@ var UserSchema = new Schema({
             return password.length >= 6;
         }, 'La Contraseña debe tener seis o mas caracteres.']
     },
+    resetPasswordToken: String,
+    resetPasswordExpires: Date,
     active: {
         type: Boolean,
         default: false
@@ -48,7 +50,6 @@ UserSchema.pre('save', function (next) {
 
 // Comparar contraseñas
 UserSchema.methods.comparePassword = function (password, hash) {
-    // console.log(password, hash)
     return bcrypt.compareSync(password, hash);
 };
 
