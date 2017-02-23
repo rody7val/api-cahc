@@ -6,8 +6,8 @@
     "start": "node ./bin/www"
   },
   "engines": {
-    "node": "4.4.x",
-    "npm": "2.15.x"
+    "node": "6.2.2",
+    "npm": "3.9.5"
   },
   "author": "Rodolfo Valguarnera <rod7val@gmail.com> (https://github.com/rody7val/)",
   "repository": {
